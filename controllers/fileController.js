@@ -83,7 +83,40 @@ const delDir=async(req,res,next)=>{
         next(error)
     }
 }
-
+const switchDir=async(req,res,next)=>{
+    try {
+        let {path,dirName}=req.body
+        let check=await Directory.findOne({path,dirName})
+        if(!check){
+            res.status(400).send({success:false,message:"Folder does not exist"})
+            return
+        }
+        let update=await Directory.findOneAndUpdate({path,dirName},{deleted:!check.deleted})
+        res.status(200).json({
+            success:true
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+const switchFile=async(req,res,next)=>{
+    try {
+        let {path,fileName}=req.body
+        let check=await Files.findOne({path,fileName})
+        if(!check){
+            res.status(400).send({success:false,message:"File does not exist"})
+            return
+        }
+        console.log(check.deleted)
+        let update=await Files.findOneAndUpdate({path,fileName},{deleted:!check.deleted})
+        console.log(update)
+        res.status(200).json({
+            success:true
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 const delFile=async(req,res,next)=>{
     try {
         let {path,fileName}=req.body
@@ -127,4 +160,4 @@ const getAll=async(req,res,next)=>{
     }
 }
 
-module.exports={createPath,createFile,createDir,getDir,getFile,getAll,delDir,delFile}
+module.exports={createPath,createFile,createDir,getDir,getFile,getAll,delDir,delFile,switchDir,switchFile}
