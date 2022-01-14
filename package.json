@@ -7,7 +7,7 @@
     "debug": "ndb server.js",
     "start": "node server.js"
   },
-  "author": "Moath Shreim",
+  "author": "Aris Abdulgani",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

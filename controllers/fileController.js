@@ -20,7 +20,8 @@ const createPath=async(req,res,next)=>{
 const createFile=async(req,res,next)=>{
     try {
         let {path,fileName,data}=req.body
-        let check=await Files.findOne({path,fileName})
+        console.log(req.body)
+        let check=await Files.findOne({path,fileName,data})
         if(check){
             res.status(400).send({success:false,message:"Cannot create file with same name at this path"})
             return
